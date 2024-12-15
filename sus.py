@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 root = tk.Tk()
 root.title("9-Grid Tic Tac Toe")
-
+root.configure(bg="lightblue")
 current_player = "S"
 main_board = [""] * 9
 count_x = 0
@@ -97,14 +97,18 @@ for row in range(3):
 
 
 def reset_grid():
-    global current_player, main_board, count_x, count_y
+    global current_player, main_board, count_x, count_y, winning_combinations
     main_board = [""] * 9  # Reset the main board
     count_x = 0
     count_y = 0
     current_player = "S"
     update_Score(count_x, count_y)
     update_player_label()
-
+    winning_combinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],  # Rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],  # Columns
+        [0, 4, 8], [2, 4, 6]  # Diagonals
+    ]
     # Reset the buttons in the UI
     for button in all_buttons:
         button["text"] = ""

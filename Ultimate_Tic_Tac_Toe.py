@@ -5,7 +5,7 @@ from tkinter import messagebox
 # Create the main application window
 root = tk.Tk()
 root.title("9-Grid Tic Tac Toe")
-root.configure(bg="lightgray")  # Hexadecimal for dark blue
+root.configure(bg="lightblue")  # Hexadecimal for dark blue
 
 # Initialize variables
 current_player = "X"
@@ -118,6 +118,7 @@ def reset_grid():
     current_player = "X"
     count_x = 0
     count_y = 0
+
     update_Score(count_x, count_y)
     update_player_label()
 
