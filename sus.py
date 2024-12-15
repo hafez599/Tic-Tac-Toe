@@ -5,7 +5,7 @@ root = tk.Tk()
 root.title("9-Grid Tic Tac Toe")
 
 current_player = "S"
-main_board = [""] * 9   
+main_board = [""] * 9
 count_x = 0
 count_y = 0
 winning_combinations = [
@@ -20,7 +20,7 @@ def check_winner(board):
             winning_combinations = [c for c in winning_combinations if c != combo]
             print(winning_combinations)
             return True
-            
+
     if "" not in board:
         return "Tie"
     return None
@@ -30,8 +30,8 @@ def update_player_label():
     player_label.config(text=f"Current Player: {current_player}")
 
 def update_Score(x,o):
-    O_Score.config(text=f"Current S Score: {o}")
-    X_Score.config(text=f"Current U Score: {x}")
+    O_Score.config(text=f"Current U Score: {o}")
+    X_Score.config(text=f"Current S Score: {x}")
 
 
 def button_click(button, cell_index):
@@ -41,16 +41,25 @@ def button_click(button, cell_index):
         button["text"] = current_player
         winner = check_winner(main_board)
         if winner == True:
-            if winner == "S":
+            if current_player == "S":
                 count_x += 1
             else:
                 count_y += 1
             update_Score(count_x, count_y)
-        elif(winner == "Tie"):
-            messagebox.showinfo("Game Over", "It's a tie!")
+        # elif(winner == "Tie"):
+        #     messagebox.showinfo("Game Over", "It's a tie!")
         current_player_switch()
-        
-
+        check_final_win()
+def check_final_win():
+    global count_x , count_y
+    if "" not in main_board:
+        if count_x>count_y:
+            messagebox.showinfo("Game Over", "Player S win")
+        elif count_y>count_x:
+            messagebox.showinfo("Game Over", "Player U win")
+        else:
+            messagebox.showinfo("Game Over", "Tie!")
+        reset_grid()
 def current_player_switch():
     global current_player
     current_player = "U" if current_player == "S" else "S"
@@ -82,18 +91,21 @@ for row in range(3):
             text="", font=("Arial", 14), height=2, width=5
         )
         button.config(command=lambda b=button, c=cell_index: button_click(b, c))
-        
-        button.grid(row=row, column=col, padx=2, pady=2) 
+
+        button.grid(row=row, column=col, padx=2, pady=2)
         all_buttons.append(button)
 
-def reset():
-    global main_board, current_player
-    main_board = [""] * 9
+
+def reset_grid():
+    global current_player, main_board, count_x, count_y
+    main_board = [""] * 9  # Reset the main board
+    count_x = 0
+    count_y = 0
+    current_player = "S"
+    update_Score(count_x, count_y)
+    update_player_label()
+
+    # Reset the buttons in the UI
     for button in all_buttons:
         button["text"] = ""
-    count_x = count_y = 0
-    current_player = "S"
-    update_player_label()
-    update_Score(count_x, count_y)
- 
 root.mainloop()
