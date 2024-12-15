@@ -47,6 +47,7 @@ def game1():
                     count_y += 1
                 update_score(count_x, count_y)
             current_player_switch()
+            update_player_label()
             check_final_win()
 
     def check_final_win():
